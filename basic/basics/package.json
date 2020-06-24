@@ -17,6 +17,7 @@
     "@types/styled-components": "^5.1.0",
     "css-loader": "^3.6.0",
     "html-webpack-plugin": "^4.3.0",
+    "netlify-cli": "^2.54.0",
     "style-loader": "^1.2.1",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5",
