@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "preact": "^10.4.4",
+    "prosemirror-example-setup": "^1.1.2",
     "prosemirror-model": "^1.10.0",
     "prosemirror-schema-basic": "^1.1.2",
     "prosemirror-schema-list": "^1.1.2",
