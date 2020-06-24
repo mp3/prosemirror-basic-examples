@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "dev": "webpack-dev-server --host 0.0.0.0",
+    "build": "webpack --mode production",
+    "typecheck": "tsc -p . --noEmit",
+    "deploy": "netlify deploy -d dist --prod"
+  },
   "dependencies": {
     "preact": "^10.4.4",
     "styled-components": "^5.1.1"
