@@ -1,3 +1,3 @@
-## Basic examples of ProseMirror
+## Examples of ProseMirror
 
 https://prosemirror.net/examples/
