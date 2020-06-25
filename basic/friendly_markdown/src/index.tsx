@@ -56,7 +56,25 @@ const Main = () => {
   const contentRef = useRef<HTMLTextAreaElement>(null)
   
   useEffect(() => {
+    let view: MarkdownView | ProseMirrorView = new MarkdownView(editorRef.current, contentRef.current.value)
 
+    const onClickButton = (event: Event) => {
+      const target = event.target as HTMLInputElement
+      if (target?.checked === false) {
+        return
+      }
+
+      const View = target.value === 'markdown' ? MarkdownView : ProseMirrorView
+      if (view instanceof View) {
+        return
+      }
+
+      const content = view.content
+
+      view.destroy()
+      view = new View(editorRef.current, content)
+      view.focus()
+    }
   }, [])
 
   return (
