@@ -1,6 +1,10 @@
 import { h, render } from 'preact'
+import { useEffect, useRef } from 'preact/hooks'
 import { Plugin, EditorState } from 'prosemirror-state'
 import { EditorView } from 'prosemirror-view'
+import { DOMParser } from 'prosemirror-model'
+import { schema } from 'prosemirror-schema-basic'
+import { exampleSetup } from 'prosemirror-example-setup'
 
 const selectionSizePlugin = new Plugin({
   view(editorView) {
@@ -51,8 +55,28 @@ class SelectionSizeTooltip {
 }
 
 const Main = () => {
+  const editorRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const view = new EditorView(editorRef.current, {
+      state: EditorState.create({
+        doc: DOMParser.fromSchema(schema).parse(contentRef.current),
+        plugins: exampleSetup({ schema }).concat(selectionSizePlugin)
+      })
+    })
+
+    console.log(view)
+  }, [])
+
   return (
-    <div>examples</div>
+    <div>
+      <div ref={editorRef} id="editor" />
+      <div ref={contentRef} style="display: none" id="content" >
+        <p>Select some text to see a tooltip with the size of your selection.</p>
+        <p>(That's not the most useful use of a tooltip, but it's a nicely simple example.)</p>
+      </div>
+    </div>
   )
 }
 
