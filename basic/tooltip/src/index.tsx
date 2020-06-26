@@ -45,7 +45,7 @@ class SelectionSizeTooltip {
     }
 
     this.tooltip.style.left = (left - box?.left) + 'px'
-    this.tooltip.style.bottom = (box?.bottom - start.top) + 'px'
+    this.tooltip.style.top = (box?.top + start.bottom) + 'px'
     this.tooltip.textContent = String(to - from)
   }
 
