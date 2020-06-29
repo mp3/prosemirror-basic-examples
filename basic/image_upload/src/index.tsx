@@ -6,6 +6,12 @@ import { schema } from 'prosemirror-schema-basic'
 import { DOMParser } from 'prosemirror-model'
 import { exampleSetup } from 'prosemirror-example-setup'
 
+declare global {
+  interface Window {
+    view?: EditorView
+  }
+}
+
 const Main = () => {
   const editorRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
