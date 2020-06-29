@@ -130,6 +130,6 @@ const Main = () => {
 
 const root = document.getElementById('root')
 
-if (root) [
+if (root) {
   render(<Main />, root)
-]
+}
