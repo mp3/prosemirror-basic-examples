@@ -1,4 +1,5 @@
 import { h, render } from 'preact'
+import { useEffect, useRef } from 'preact/hooks'
 import { EditorView } from 'prosemirror-view'
 import CodeMirror from 'codemirror'
 import { TextSelection, EditorState, Selection, Transaction } from 'prosemirror-state'
@@ -6,6 +7,8 @@ import { schema } from 'prosemirror-schema-basic'
 import { undo, redo } from 'prosemirror-history'
 import { exitCode } from 'prosemirror-commands'
 import { keymap } from 'prosemirror-keymap'
+import { DOMParser, Schema } from 'prosemirror-model'
+import { exampleSetup } from 'prosemirror-example-setup' 
 
 class CodeBlockView {
   public node: Node
@@ -197,8 +200,42 @@ const arrowHandlers = keymap({
 })
 
 const Main = () => {
+  const editorRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const view = new EditorView(editorRef.current, {
+      state: EditorState.create({
+        doc: DOMParser.fromSchema(schema).parse(contentRef.current),
+        plugins: exampleSetup(schema)
+      })
+    })
+
+    console.log(view)
+  }, [])
+
   return (
-    <div>examples</div>
+    <div>
+      <div ref={editorRef} />
+      <div ref={contentRef}>
+        <h2>
+          The code block is a code editor
+        </h2>
+        <p>
+        This editor has been wired up to render code blocks as instances of the CodeMirror code editor, which provides syntax highlighting, auto-indentation, and similar.
+        </p>
+
+        <code>
+          function max(a, b) {
+            return a > b ? a : b
+          }
+        </code>
+
+        <p>
+          The content of the code editor is kept in sync with the content of the code block in the rich text editor, so that it is as if you're directly editing the outer document, using a more convenient interface.
+        </p>
+      </div>
+    </div>
   )
 }
 
