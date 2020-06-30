@@ -4,8 +4,9 @@ import { EditorView } from 'prosemirror-view'
 class MenuView {
   public editorView: EditorView
   public dom: HTMLDivElement
+  public items: any[]
 
-  constructor(items, editorView: EditorView) {
+  constructor(items: any[], editorView: EditorView) {
     this.items = items
     this.editorView = editorView
 
