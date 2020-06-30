@@ -1,18 +1,23 @@
 import { h, render } from 'preact'
 import { useEffect, useRef } from 'preact/hooks'
 import { EditorView } from 'prosemirror-view'
-import { Plugin, EditorState } from 'prosemirror-state'
+import { Plugin, EditorState, Transaction } from 'prosemirror-state'
 import { setBlockType, toggleMark, wrapIn, baseKeymap } from 'prosemirror-commands'
 import { schema } from 'prosemirror-schema-basic'
 import { DOMParser } from 'prosemirror-model'
 import { keymap } from 'prosemirror-keymap'
 
+type MenuItem = {
+  command: (state: EditorState, dispatch?: (tr: Transaction) => void, editorView?: EditorView) => boolean,
+  dom: HTMLElement
+}
+
 class MenuView {
   public editorView: EditorView
   public dom: HTMLDivElement
-  public items: any[]
+  public items: MenuItem[]
 
-  constructor(items: any[], editorView: EditorView) {
+  constructor(items: MenuItem[], editorView: EditorView) {
     this.items = items
     this.editorView = editorView
 
@@ -25,7 +30,7 @@ class MenuView {
       event.preventDefault()
       editorView.focus()
       items.forEach(({ command, dom }) => {
-        if (dom.contains(event.target)) {
+        if (dom.contains(event.target as Node | null)) {
           command(editorView.state, editorView.dispatch, editorView)
         }
       })
@@ -34,7 +39,7 @@ class MenuView {
 
   update() {
     this.items.forEach(({ command, dom }) => {
-      const active = command(this.editorView.state, null, this.editorView)
+      const active = command(this.editorView.state, undefined, this.editorView)
       dom.style.display = active ? '' : 'none'
     })
   }
@@ -44,7 +49,7 @@ class MenuView {
   }
 }
 
-const menuPlugin = (items) => {
+const menuPlugin = (items: MenuItem[]) => {
   return new Plugin({
     view(editorView: EditorView) {
       const menuView = new MenuView(items, editorView)
