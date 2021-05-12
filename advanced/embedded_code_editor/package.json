@@ -10,7 +10,7 @@
     "deploy": "netlify deploy -d dist --prod"
   },
   "dependencies": {
-    "codemirror": "^5.55.0",
+    "codemirror": "^5.58.2",
     "preact": "^10.4.4",
     "prosemirror-commands": "^1.1.4",
     "prosemirror-example-setup": "^1.1.2",
